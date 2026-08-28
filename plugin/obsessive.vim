@@ -8,7 +8,9 @@ if exists('g:loaded_obsess') || &compatible
 endif
 let g:loaded_obsess = 1
 
-let g:obsessive_dir = '~/.nvim/session'
+function! s:obsessive_normalise_dir(dir)
+  return substitute(a:dir, '/\?$', '/', '')
+endfunction
 
 function! Obsess(bang) abort
   " Obsess!
@@ -23,13 +25,13 @@ function! Obsess(bang) abort
     return
   endif
 
-  let l:dir = expand('~/.nvim/session/') . fnamemodify(getcwd(), ':t')
+  let l:dir = s:obsessive_normalise_dir(expand(g:obsessive#dir)) . fnamemodify(getcwd(), ':t')
   call mkdir(l:dir, 'p')
   execute 'Obsession' fnameescape(l:dir)
 endfunction
 
 function! SessionFile() abort
-  return expand('~/.nvim/session/') . fnamemodify(getcwd(), ':t') . '/Session.vim'
+  return s:obsessive_normalise_dir(expand(g:obsessive#dir)) . fnamemodify(getcwd(), ':t') . '/Session.vim'
 endfunction
 
 function! SessionRestore() abort
