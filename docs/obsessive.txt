@@ -1,0 +1,38 @@
+*obsessive.txt*  Builds upon vim-obsession, centralising session storage
+
+Author:  Zaccary Price <https://zaccary.me/>
+Repo:    https://github.com/vivaldi-va/vim-obsessive
+License: Same terms as Vim itself (see |license|)
+
+DESCRIPTION                                        *obsessive-description*
+
+Builds upon vim-obsession, centralising session storage.
+
+By default vim-obsession (https://github.com/tpope/vim-obsession) saves a
+Session.vim in the current working directory, or a defined directory if provided.
+
+Instead, this addition centralises session storage, using the CWD name. For
+example a project under $HOME/example/project/ will create the file:
+<dir>/session/project/Session.vim
+
+CONFIGURATION                                        *obsessive-configuration*
+
+There are configuration values available (shown with their default
+values):
+
+* set session file storage directory >
+  let g:obsessive_dir = '~/.nvim/session'
+
+
+USAGE                                               *obsessive* *:Obsess*
+
+:Obsess              If session tracking is already in progress, pause it.
+                        Otherwise, resume tracking or create a new session in
+                        the current directory.
+
+:Obsess!             Stop obsessive and delete the underlying session file.
+
+Loading a session created with |:Obsess| automatically resumes updates to
+that file.
+
+ vim:tw=78:et:ft=help:norl:
