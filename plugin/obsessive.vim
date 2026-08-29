@@ -59,9 +59,10 @@ function! SessionRestore() abort
   execute 'source' fnameescape(l:file)
 endfunction
 
-nnoremap <leader>sr :call SessionRestore()<CR>
 
 command! -bang Obsess call Obsess(<bang>0)
+command! ObsessRestore call SessionRestore()
+nnoremap <leader>sr :call SessionRestore()<CR>
 
 
 " Obsess Airline status
@@ -92,11 +93,13 @@ function! s:airline_obsess_init() abort
   let g:airline_section_y = airline#section#create_right(['obsess', 'ffenc'])
 endfunction
 
-augroup AirlineObsess
-  autocmd!
-  autocmd User AirlineAfterInit call s:airline_obsess_init()
-augroup END
+if g:obsessive#airline_enabled == 1
+  augroup AirlineObsess
+    autocmd!
+    autocmd User AirlineAfterInit call s:airline_obsess_init()
+  augroup END
 
-if v:vim_did_enter && exists('*airline#parts#define_function')
-  call s:airline_obsess_init()
+  if v:vim_did_enter && exists('*airline#parts#define_function')
+    call s:airline_obsess_init()
+  endif
 endif
